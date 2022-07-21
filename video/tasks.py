@@ -1,5 +1,6 @@
 import os
 import subprocess
+import time
 from celery import shared_task
 from video.models import Video
 
@@ -38,6 +39,8 @@ def convert_video_util(video_path, scale):
 def convert_video(video_id):
     """Celery task to convert videos"""
 
+    start = time.time()
+
     video = Video.objects.get(id=video_id)
     video_path = video.video_original.path
 
@@ -56,3 +59,7 @@ def convert_video(video_id):
         video.update_video_360(new_filename)
     else:
         print('\nVideo convertion to scale 360 failed\n')
+
+    end = time.time()
+    duration = int(end - start()) # seconds as integer
+    video.update_convert_time(duration)

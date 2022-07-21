@@ -16,6 +16,10 @@ class Video(models.Model):
     def update_video_360(self, filename):
         self.video_360.name = filename
         self.save()
+    
+    def update_convert_time(self, duration):
+        self.convert_time = duration
+        self.save()
 
     def __str__(self):
         return self.video_original.name
