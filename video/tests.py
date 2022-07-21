@@ -1,8 +1,9 @@
-import os
 import shutil
 import subprocess
+
 from django.test import TestCase
 from django.conf import settings
+
 from .models import Video
 
 
@@ -30,3 +31,11 @@ class VideoTestCase(TestCase):
         command_list[4] = 'scale=-1:360'
         command_list[-1] = 'media/test_360.mp4'
         self.assertEqual(subprocess.call(command_list), 0)
+
+    def test_redis_connection(self):
+        command_list = [
+            'redis-cli',
+            'ping',
+        ]
+
+        print(subprocess.call(command_list))
